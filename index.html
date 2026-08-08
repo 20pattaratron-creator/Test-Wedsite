@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Portfolio case study: Business Operations ERP & Data Analytics — interactive synthetic-data demo." />
+  <meta name="theme-color" content="#0b63b6" />
+  <title>ERP & Business Analytics | Portfolio Demo</title>
+  <link rel="icon" href="assets/logo-blue.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">ข้ามไปเนื้อหาหลัก</a>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="กลับไปด้านบน">
+        <img src="assets/logo-blue.png" alt="ESAN logo" />
+        <span>
+          <strong>Business ERP Portfolio</strong>
+          <small>Operations · Analytics · Documents</small>
+        </span>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="เปิดเมนู" aria-expanded="false">☰</button>
+      <nav class="nav" id="nav">
+        <a href="#overview">ภาพรวม</a>
+        <a href="#demo">Interactive Demo</a>
+        <a href="#features">ความสามารถ</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#resume">Resume</a>
+        <a class="nav-cta" href="#contact">ติดต่อ / Links</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow"><span class="dot"></span> PORTFOLIO CASE STUDY · SYNTHETIC DATA</div>
+          <h1>ระบบ ERP สำหรับงานขาย เอกสารธุรกิจ และ <span>Business Analytics</span></h1>
+          <p class="hero-lead">
+            ตัวอย่างผลงาน Full-stack Frontend / Business Logic ที่ออกแบบเพื่อรวมงานขาย การสั่งผลิต ค่าใช้จ่าย เอกสารภาษี
+            และการวิเคราะห์ข้อมูลไว้ใน workflow เดียว โดยเวอร์ชันสาธิตนี้ใช้ข้อมูลจำลองทั้งหมดและไม่เชื่อมต่อฐานข้อมูลจริง
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#demo">ทดลอง Dashboard</a>
+            <a class="btn secondary" href="#architecture">ดู System Design</a>
+          </div>
+          <div class="hero-proof">
+            <div><strong>7+</strong><span>Business modules</span></div>
+            <div><strong>4</strong><span>Analytics layers</span></div>
+            <div><strong>100%</strong><span>Demo-safe data</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal delay-1" aria-label="ตัวอย่างหน้าจอระบบ">
+          <div class="window-card">
+            <div class="window-bar"><span></span><span></span><span></span><b>ERP Analytics</b></div>
+            <div class="mini-dashboard">
+              <div class="mini-sidebar">
+                <img src="assets/logo-blue.png" alt="" />
+                <i class="active"></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+              <div class="mini-main">
+                <div class="mini-title"><span></span><b></b></div>
+                <div class="mini-kpis"><i></i><i></i><i></i><i></i></div>
+                <div class="mini-chart" id="hero-mini-chart"></div>
+                <div class="mini-bottom"><i></i><i></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="floating-card fc-1"><b>↑ 18.4%</b><span>YoY Sales</span></div>
+          <div class="floating-card fc-2"><b>Data Quality</b><span>97.8%</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="overview">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">PROJECT OVERVIEW</div>
+          <h2>จากระบบบันทึกข้อมูล → สู่เครื่องมือช่วยตัดสินใจ</h2>
+          <p>โจทย์หลักคือทำให้ข้อมูลที่กระจายอยู่ในงานขาย งานผลิต เอกสาร และค่าใช้จ่าย เชื่อมโยงกันและอ่านภาพธุรกิจได้ในหน้าเดียว</p>
+        </div>
+        <div class="problem-grid">
+          <article class="problem-card reveal">
+            <span class="num">01</span><h3>Business Workflow</h3>
+            <p>จัด flow ตั้งแต่ใบเสนอราคา → สั่งผลิต → ส่งสินค้า → ใบเสร็จ พร้อมสถานะและเลขอ้างอิงระหว่างเอกสาร</p>
+          </article>
+          <article class="problem-card reveal delay-1">
+            <span class="num">02</span><h3>Financial Logic</h3>
+            <p>คำนวณยอดก่อน VAT, VAT 7%, ต้นทุน, ค่าใช้จ่าย และกำไร โดยป้องกันการนับยอดซ้ำระหว่างหลักฐานกับเอกสารที่ออกจริง</p>
+          </article>
+          <article class="problem-card reveal delay-2">
+            <span class="num">03</span><h3>Business Intelligence</h3>
+            <p>สร้าง KPI, trend, forecast, customer segmentation, product analytics และ data-quality checks สำหรับการตัดสินใจ</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section demo-section" id="demo">
+      <div class="container">
+        <div class="section-head light reveal">
+          <div class="eyebrow">INTERACTIVE DEMO</div>
+          <h2>Dashboard สาธิตด้วยข้อมูลจำลอง</h2>
+          <p>ลองเปลี่ยนสาขา ปี และมุมมอง ระบบจะคำนวณ KPI และกราฟใหม่ทันที — ไม่มีข้อมูลลูกค้าหรือ Firebase จริง</p>
+        </div>
+
+        <div class="demo-shell reveal">
+          <aside class="demo-sidebar">
+            <div class="demo-logo"><img src="assets/logo-blue.png" alt="" /><span>ERP Demo</span></div>
+            <button class="demo-menu active" data-view="overview">▦ <span>Dashboard</span></button>
+            <button class="demo-menu" data-view="analytics">⌁ <span>Analytics</span></button>
+            <button class="demo-menu" data-view="documents">▤ <span>Documents</span></button>
+            <div class="demo-side-note"><span>DEMO MODE</span><p>ข้อมูลสังเคราะห์<br>ไม่เชื่อม Cloud</p></div>
+          </aside>
+
+          <div class="demo-content">
+            <div class="demo-topbar">
+              <div><small>Business Operations</small><h3 id="demo-title">Executive Dashboard</h3></div>
+              <div class="filters">
+                <label>สาขา<select id="branch-filter"><option value="all">รวมทุกสาขา</option><option value="khonkaen">ขอนแก่น</option><option value="ubon">อุบล</option></select></label>
+                <label>ปี<select id="year-filter"><option>2026</option><option>2025</option></select></label>
+              </div>
+            </div>
+
+            <div id="view-overview" class="demo-view active">
+              <div class="kpi-grid" id="kpi-grid"></div>
+              <div class="dash-grid">
+                <article class="panel wide">
+                  <div class="panel-head"><div><h4>ยอดขายรายเดือน</h4><span>Sales before VAT · ล้านบาท</span></div><div class="legend"><i></i> Actual <i class="forecast"></i> Forecast</div></div>
+                  <div class="svg-chart" id="sales-chart"></div>
+                </article>
+                <article class="panel">
+                  <div class="panel-head"><div><h4>Sales Funnel</h4><span>Production → Delivery → Receipt</span></div></div>
+                  <div id="funnel" class="funnel"></div>
+                </article>
+                <article class="panel">
+                  <div class="panel-head"><div><h4>Top Customer Segments</h4><span>Share of sales</span></div></div>
+                  <div id="segments" class="segment-list"></div>
+                </article>
+                <article class="panel wide">
+                  <div class="panel-head"><div><h4>เป้าหมายรายเดือน</h4><span>ยอดขายสะสมเทียบเป้าหมาย</span></div><b id="target-label"></b></div>
+                  <div class="target-wrap"><div class="target-track"><span id="target-bar"></span></div><div class="target-scale"><span>0</span><span id="target-mid"></span><span id="target-max"></span></div></div>
+                </article>
+              </div>
+            </div>
+
+            <div id="view-analytics" class="demo-view">
+              <div class="analytics-strip">
+                <button class="pill active" data-metric="sales">Descriptive</button>
+                <button class="pill" data-metric="profit">Diagnostic</button>
+                <button class="pill" data-metric="forecast">Predictive</button>
+                <button class="pill" data-metric="action">Prescriptive</button>
+              </div>
+              <div class="analytics-grid">
+                <article class="panel"><div class="panel-head"><div><h4>Customer Pareto / ABC</h4><span>Top customers by revenue</span></div></div><div id="customer-table"></div></article>
+                <article class="panel"><div class="panel-head"><div><h4>Data Quality</h4><span>Validation checks</span></div></div><div id="quality"></div></article>
+                <article class="panel wide"><div class="panel-head"><div><h4>3-Month Forecast</h4><span>Moving average + trend signal</span></div><b id="forecast-total"></b></div><div class="svg-chart compact" id="forecast-chart"></div></article>
+                <article class="panel wide"><div class="panel-head"><div><h4>Actionable Insights</h4><span>Example recommendations generated from business rules</span></div></div><div id="insights" class="insights"></div></article>
+              </div>
+            </div>
+
+            <div id="view-documents" class="demo-view">
+              <div class="doc-tabs"><button class="doc-tab active" data-doc="quote">ใบเสนอราคา</button><button class="doc-tab" data-doc="invoice">ใบกำกับภาษี</button><button class="doc-tab" data-doc="receipt">ใบเสร็จรับเงิน</button></div>
+              <div class="document-preview" id="document-preview"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">CORE CAPABILITIES</div>
+          <h2>สิ่งที่โปรเจกต์นี้แสดงให้เห็น</h2>
+          <p>เหมาะสำหรับใช้คุยกับ Recruiter / Hiring Manager ทั้งสาย Data Analyst, Business Analyst, BI Developer และ Frontend-oriented Data Product</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card reveal"><span>📊</span><h3>Business Dashboard</h3><p>KPI ยอดขายก่อน VAT, ยอดส่งสินค้า, ค่าใช้จ่าย, กำไร, เป้าหมาย และ trend รายเดือน</p><div class="tags"><b>Metrics</b><b>Filtering</b><b>Visualization</b></div></article>
+          <article class="feature-card reveal delay-1"><span>🔮</span><h3>Forecast & Analytics</h3><p>รองรับ Moving Average, Weighted MA, Linear Trend, Exponential Smoothing และแนวคิด Auto Ensemble</p><div class="tags"><b>Forecast</b><b>Pareto</b><b>Data Quality</b></div></article>
+          <article class="feature-card reveal delay-2"><span>🧾</span><h3>Document Workflow</h3><p>ใบเสนอราคา หลักฐานส่งสินค้า ใบกำกับภาษี ใบเสร็จ และการอ้างอิงเอกสารระหว่างขั้นตอน</p><div class="tags"><b>VAT 7%</b><b>PDF</b><b>Business Rules</b></div></article>
+          <article class="feature-card reveal"><span>☁️</span><h3>Cloud-ready Architecture</h3><p>ออกแบบต้นฉบับให้เชื่อม Firebase/Firestore และ Google Drive พร้อม local fallback ผ่าน IndexedDB</p><div class="tags"><b>Firebase</b><b>OAuth</b><b>IndexedDB</b></div></article>
+          <article class="feature-card reveal delay-1"><span>🧹</span><h3>Data Reliability</h3><p>มีแนวคิด deduplication, cloud-sync safety guard, data validation และแยก collections เพื่อป้องกันยอดซ้ำ</p><div class="tags"><b>Data Quality</b><b>Dedup</b><b>Safety Guard</b></div></article>
+          <article class="feature-card reveal delay-2"><span>📱</span><h3>Responsive UI</h3><p>ออกแบบให้ใช้งานได้ทั้ง desktop และ mobile พร้อม navigation, forms และ interactive reports</p><div class="tags"><b>HTML</b><b>CSS</b><b>JavaScript</b></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section architecture-section" id="architecture">
+      <div class="container">
+        <div class="section-head light reveal">
+          <div class="eyebrow">SYSTEM DESIGN</div>
+          <h2>Architecture ของเวอร์ชันต้นฉบับ</h2>
+          <p>หน้า Portfolio นี้ทำงานแบบ static แต่แผนภาพด้านล่างอธิบายแนวคิดของระบบจริงที่รองรับ cloud data และไฟล์แนบ</p>
+        </div>
+        <div class="architecture reveal">
+          <div class="arch-node primary"><span>01</span><b>Browser UI</b><small>Forms · Dashboard · Analytics</small></div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node"><span>02</span><b>Business Logic</b><small>VAT · KPI · Workflow · Forecast</small></div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-node"><span>03</span><b>Firestore</b><small>Shared business records</small></div>
+          <div class="arch-arrow">↘</div>
+          <div class="arch-node green"><span>04</span><b>Google Drive</b><small>Evidence / attachments</small></div>
+          <div class="arch-fallback">Fallback ↙</div>
+          <div class="arch-node muted"><span>05</span><b>IndexedDB</b><small>Local-only attachment store</small></div>
+        </div>
+        <div class="tech-row reveal">
+          <span>JavaScript ES Modules</span><span>Firebase / Firestore</span><span>Google OAuth</span><span>IndexedDB</span><span>html2canvas</span><span>jsPDF</span><span>SheetJS</span><span>GitHub Pages Demo</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="resume">
+      <div class="container resume-grid">
+        <div class="resume-copy reveal">
+          <div class="eyebrow">RESUME READY</div>
+          <h2>ข้อความตัวอย่างสำหรับใส่ใน Resume</h2>
+          <p>คุณสามารถคัดลอกไปใช้ แล้วแก้คำว่า “พัฒนา/ออกแบบ” ให้ตรงกับบทบาทจริงของคุณ</p>
+          <button class="btn primary" id="copy-resume">คัดลอก Resume Bullets</button>
+          <span class="copy-status" id="copy-status" aria-live="polite"></span>
+        </div>
+        <div class="resume-card reveal delay-1">
+          <ul id="resume-bullets">
+            <li>พัฒนา ERP web application สำหรับ workflow งานขาย การสั่งผลิต ค่าใช้จ่าย และเอกสารธุรกิจ พร้อม dashboard สรุป KPI หลัก</li>
+            <li>ออกแบบ business logic สำหรับ VAT 7%, ยอดขายก่อน VAT, ต้นทุน, กำไร และการเชื่อมโยงเอกสาร เพื่อลดความเสี่ยงจากการนับยอดซ้ำ</li>
+            <li>สร้าง Business Analytics ครอบคลุม trend, forecasting, Pareto/ABC customer analysis, product analytics และ data-quality monitoring</li>
+            <li>ออกแบบการจัดเก็บข้อมูลด้วย Firebase/Firestore และไฟล์แนบผ่าน Google Drive พร้อม IndexedDB fallback เมื่อ cloud storage ไม่พร้อมใช้งาน</li>
+            <li>พัฒนา responsive UI ด้วย HTML/CSS/JavaScript และ export เอกสาร/รายงานด้วย jsPDF, html2canvas และ SheetJS</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+      <div class="container contact-card reveal">
+        <div><div class="eyebrow">NEXT STEP</div><h2>ใส่ลิงก์ของคุณก่อน Publish</h2><p>แก้ค่าใน <code>app.js</code> ส่วน <code>PROFILE_LINKS</code> เพื่อเชื่อม GitHub, LinkedIn, Email และ Resume PDF ของคุณ</p></div>
+        <div class="contact-links" id="contact-links"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner"><span>ERP & Business Analytics — Portfolio Demo</span><span>ข้อมูลทั้งหมดใน Demo เป็นข้อมูลสังเคราะห์</span></div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
