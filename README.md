@@ -1,6 +1,6 @@
-# ERP & Business Analytics — Portfolio Demo (GitHub Pages)
+# ERP & Business Analytics — Portfolio  (GitHub Pages)
 
-เวอร์ชันนี้ทำขึ้นสำหรับใช้เป็น **Portfolio / Resume Showcase** โดยเฉพาะ และตั้งใจแยกออกจากระบบใช้งานจริง
+เวอร์ชันนี้ทำขึ้นสำหรับใช้เป็น **Portfolio / Resume Showcase** 
 
 ## สิ่งที่ปรับเพื่อให้เปิดสาธารณะได้
 
