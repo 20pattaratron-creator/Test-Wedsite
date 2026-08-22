@@ -69,7 +69,7 @@ function invoiceNetSales(doc={}){
 // ============================================================
 const MONTHS=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 const UNITS=['กล่อง','ชุด','เครื่อง','ดวง','ม้วน','ตลับ','อัน','แผ่น','ขวด','ถุง','เล่ม','ซอง','อื่น ๆ'];
-const BRANCH_TH={khonkaen:'สาขาขอนแก่น',ubon:'สาขาอุบล'};
+const BRANCH_TH={khonkaen:'สำนักงานใหญ่ (DEMO)',ubon:'สาขาทดลอง (DEMO)'};
 
 const CUSTOMER_AGENCY_GROUPS=[
   {value:'government_coop_association',label:'ราชการ / สหกรณ์ / สมาคม'},
@@ -822,13 +822,59 @@ function replaceLocalYearWithCloudPack(year, pack, profile, options = {}){
 
 
 async function syncFromFirebaseYear(year = getCurrentSelectedYear(), options = {}){
-  // Portfolio Demo: intentionally local-only. No Firebase connection is made.
-  return false;
+  const profile = getCurrentProfile();
+
+  if (!profile) {
+    if (!options.silent) console.warn('ยังไม่ได้ Login จึงยังไม่ดึงข้อมูลจาก Firebase');
+    return false;
+  }
+
+  if (!window.FirebaseService?.loadAllDashboardDataByYear) {
+    if (!options.silent) console.warn('ยังไม่พบ FirebaseService');
+    return false;
+  }
+
+  if (cloudSyncRunning) return false;
+  cloudSyncRunning = true;
+
+  try {
+    const pack = await window.FirebaseService.loadAllDashboardDataByYear(Number(year));
+    // Firestore เป็นแหล่งข้อมูลหลัก: โหลดสำเร็จแล้วให้แทนที่ cache ในเครื่องของปี/สาขานี้
+    // เพื่อให้เอกสารที่ถูกลบบน Firebase หายจากเครื่องพนักงานด้วย
+    replaceLocalYearWithCloudPack(Number(year), pack, profile, options);
+
+    // Clean duplicated local/cloud rows and move old wrongly shifted cloud rows
+    // back to the month shown by their document date.
+    dedupeLocalYear(Number(year));
+
+    onYearChange(false);
+    renderDash();
+    renderQLList();
+    renderIList();
+    renderRList();
+    renderIssuedInvoiceList();
+    renderIssuedReceiptList();
+    renderEList();
+    renderPList();
+    populateInvRefs();
+    populateProductionRefs();
+    return true;
+  } catch (err) {
+    console.error('ดึงข้อมูลจาก Firebase ไม่สำเร็จ:', err);
+    if (!options.silent) {
+      alert('ดึงข้อมูลจาก Firebase ไม่สำเร็จ กรุณาตรวจ Firestore Rules และอินเทอร์เน็ต');
+    }
+    return false;
+  } finally {
+    cloudSyncRunning = false;
+  }
 }
-function scheduleCloudSync(year = getCurrentSelectedYear()){
-  // Portfolio Demo: cloud sync disabled by design.
-  return false;
+
+function scheduleCloudSync(year = getCurrentSelectedYear()) {
+  clearTimeout(cloudSyncTimer);
+  cloudSyncTimer = setTimeout(() => syncFromFirebaseYear(year, { silent: true }), 250);
 }
+
 async function persistAttachmentsLocalFallback(saveFnName,record,branch,year,month){
   const typeMap={saveQuote:'quotes',saveInvoice:'invoices',saveReceipt:'receipts',saveExpense:'expenses',saveProduction:'productions'};
   const type=typeMap[saveFnName];
@@ -1334,7 +1380,7 @@ function renderDeliveryTargetDashboard(){
     <div class="target-progress-values"><span>${chartMoney(m.actual)}</span><span>${m.target?chartMoney(m.target):'ยังไม่กำหนดเป้าหมาย'}</span></div>`;
   document.getElementById('target-chart').innerHTML=renderTargetSvg(m);
   document.getElementById('target-chart-note').textContent=m.mirroredFromSales
-    ?'มกราคม–มิถุนายน 2569 ใช้ยอดขายย้อนหลังเป็นยอดส่งสินค้าแทน เพื่อให้ยอดและเป้าหมายทั้งสองส่วนเท่ากัน โดยไม่สร้างหลักฐานใบส่งสินค้าซ้ำในชุดข้อมูล Demo'
+    ?'มกราคม–มิถุนายน 2569 ใช้ยอดขายย้อนหลังเป็นยอดส่งสินค้าแทน เพื่อให้ยอดและเป้าหมายทั้งสองส่วนเท่ากัน โดยไม่สร้างหลักฐานใบส่งสินค้าซ้ำใน Firebase'
     :'คำนวณเฉพาะวันจันทร์–ศุกร์ ยังไม่หักวันหยุดนักขัตฤกษ์หรือวันหยุดพิเศษของบริษัท';
 
   document.getElementById('target-workday-summary').innerHTML=`
@@ -1494,7 +1540,7 @@ function renderSalesTargetDashboard(){
     <div class="target-progress-values"><span>${chartMoney(m.actual)}</span><span>${m.target?chartMoney(m.target):'ยังไม่กำหนดเป้าหมาย'}</span></div>`;
   document.getElementById('sales-target-chart').innerHTML=renderTargetSvg(m).replace('ยอดส่งจริงสะสม','ยอดขายจริงสะสม');
   document.getElementById('sales-target-chart-note').textContent=m.deliveryModel?.mirroredFromSales
-    ?'มกราคม–มิถุนายน 2569 ยอดส่งสินค้าใช้ยอดเดียวกับยอดขายย้อนหลัง เพื่อให้ยอดและเป้าหมายเท่ากันโดยไม่สร้างเอกสารซ้ำในชุดข้อมูล Demo'
+    ?'มกราคม–มิถุนายน 2569 ยอดส่งสินค้าใช้ยอดเดียวกับยอดขายย้อนหลัง เพื่อให้ยอดและเป้าหมายเท่ากันโดยไม่สร้างเอกสารซ้ำใน Firebase'
     :'ยอดขายคำนวณจากมูลค่าขายก่อน VAT ของใบสั่งผลิต ส่วนยอดส่งสินค้าคำนวณจากหลักฐานใบส่งสินค้า จึงไม่รวมตัวเลขสองชุดเข้าด้วยกัน';
 
   document.getElementById('sales-target-workday-summary').innerHTML=`
@@ -2406,7 +2452,7 @@ function renderAnalyticsExecutiveSummary(kpis,quality,trend,arRows,deliveryRows,
   const dueSoonSupplier=supplierRows.filter(r=>r.state==='soon'||r.state==='dueToday');
   const periodText=filter.month===''?`ทั้งปี พ.ศ. ${yearLabelBE(filter.year)}`:`${MONTHS[filter.month]} พ.ศ. ${yearLabelBE(filter.year)}`;
   const mirrorNote=Number(filter.year)===2026 && (filter.month==='' || Number(filter.month)<=5)
-    ? '<div class="analytics-note">หมายเหตุ: เดือน ม.ค.–มิ.ย. พ.ศ. 2569 ระบบใช้ยอดขายย้อนหลังเป็นยอดส่งสินค้าแทน เพื่อไม่สร้างใบส่งสินค้าซ้ำในชุดข้อมูล Demo</div>' : '';
+    ? '<div class="analytics-note">หมายเหตุ: เดือน ม.ค.–มิ.ย. พ.ศ. 2569 ระบบใช้ยอดขายย้อนหลังเป็นยอดส่งสินค้าแทน เพื่อไม่สร้างใบส่งสินค้าซ้ำใน Firebase</div>' : '';
   el.innerHTML=`<div class="analytics-executive-card">
     <div><small>สรุปสำหรับผู้บริหาร</small><b>${escapeHtml(periodText)}</b><span>ยอดขาย ${chartMoney(kpis.sales)} · กำไรสุทธิ ${chartMoney(kpis.profit)} · คุณภาพข้อมูล ${quality.score}/100</span></div>
     <div><small>เงินที่ต้องติดตาม</small><b>${chartMoney(overdueAr.reduce((s,r)=>s+r.outstanding,0))}</b><span>เกินกำหนด ${overdueAr.length} บิล · ใกล้ครบกำหนด ${dueSoonAr.length} บิล</span></div>
@@ -3350,17 +3396,17 @@ function addDaysToIsoDate(dateStr,days){
 }
 const PRODUCTION_DELIVERY_LEAD_DAYS=[1,3,7,14,15,21,28,30,45,60];
 const PRODUCTION_MAKER_PRESETS=[
-  {name:'คอมฟอร์มกรุงเทพ',leadDays:[1,3,7,15,21],supplierCreditTerm:'credit60',note:'เครดิตผู้ผลิต 60 วัน'},
-  {name:'จันชนา',leadDays:[30],supplierCreditTerm:'credit30',note:'เครดิตผู้ผลิต 30 วัน'},
-  {name:'68 computer',leadDays:[7],supplierCreditTerm:'cash',note:'เงินสดเมื่อถึงกำหนดส่งสินค้า'},
-  {name:'สุเทพการพิมพ์',leadDays:[14,21],supplierCreditTerm:'credit60',note:'เครดิตผู้ผลิต 60 วัน'},
-  {name:'PK',leadDays:[14],supplierCreditTerm:'credit30',note:'เครดิตผู้ผลิต 30 วัน'},
-  {name:'วิทยา',leadDays:[7,14],supplierCreditTerm:'credit30',note:'เครดิตผู้ผลิต 30 วัน'},
-  {name:'เมดิแคร์พลัส',leadDays:[45,60],supplierCreditTerm:'credit60',note:'เครดิตผู้ผลิต 60 วัน'},
-  {name:'เจ้าพระยา 41',leadDays:[14],supplierCreditTerm:'cash',note:'เงินสดเมื่อถึงกำหนดส่งสินค้า'},
-  {name:'โพรดิวส์ลาเบล',leadDays:[14],supplierCreditTerm:'credit30',note:'เครดิตผู้ผลิต 30 วัน'},
-  {name:'PW IT',leadDays:[7],supplierCreditTerm:'credit30',note:'เครดิตผู้ผลิต 30 วัน'},
-  {name:'ยูนิ - สมาร์ท',leadDays:[7],supplierCreditTerm:'credit30',note:'เครดิตผู้ผลิต 30 วัน'}
+  {name:'โรงพิมพ์อัลฟาเดโม',leadDays:[1,3,7,15,21],supplierCreditTerm:'credit60',note:'เครดิตผู้ผลิต 60 วัน'},
+  {name:'เบต้าซัพพลายเดโม',leadDays:[30],supplierCreditTerm:'credit30',note:'เครดิตผู้ผลิต 30 วัน'},
+  {name:'เดโมเทคซิสเต็ม',leadDays:[7],supplierCreditTerm:'cash',note:'เงินสดเมื่อถึงกำหนดส่งสินค้า'},
+  {name:'แกมมาพริ้นท์เดโม',leadDays:[14,21],supplierCreditTerm:'credit60',note:'เครดิตผู้ผลิต 60 วัน'},
+  {name:'พีเคเดโมซัพพลาย',leadDays:[14],supplierCreditTerm:'credit30',note:'เครดิตผู้ผลิต 30 วัน'},
+  {name:'วิสต้าเดโมเซอร์วิส',leadDays:[7,14],supplierCreditTerm:'credit30',note:'เครดิตผู้ผลิต 30 วัน'},
+  {name:'เมดิเดโมพลัส',leadDays:[45,60],supplierCreditTerm:'credit60',note:'เครดิตผู้ผลิต 60 วัน'},
+  {name:'ริเวอร์เดโม 41',leadDays:[14],supplierCreditTerm:'cash',note:'เงินสดเมื่อถึงกำหนดส่งสินค้า'},
+  {name:'เดโมลาเบลเวิร์คส์',leadDays:[14],supplierCreditTerm:'credit30',note:'เครดิตผู้ผลิต 30 วัน'},
+  {name:'พีดับเบิลยูเดโมไอที',leadDays:[7],supplierCreditTerm:'credit30',note:'เครดิตผู้ผลิต 30 วัน'},
+  {name:'ยูนิเดโมสมาร์ท',leadDays:[7],supplierCreditTerm:'credit30',note:'เครดิตผู้ผลิต 30 วัน'}
 ];
 function normalizeProductionMakerName(value){
   return String(value||'').toLowerCase().replace(/\s+/g,'').replace(/[.．]/g,'').replace(/[–—−]/g,'-').replace(/computer/g,'computer').trim();
@@ -5101,7 +5147,7 @@ async function repairHistoricalImportData(){
 
 async function importJSON(ev){
   const f=ev.target.files[0];if(!f)return;
-  const syncCloud=document.getElementById('import-sync-cloud')?.checked!==false;
+  const syncCloud=false; // Public demo: never upload imported data to cloud
   const replaceBackup=document.getElementById('import-mode')?.value==='replace';
   const statusEl=document.getElementById('import-json-status');
   if(statusEl){statusEl.textContent='กำลังอ่านและตรวจสอบไฟล์...';statusEl.className='import-json-status working';}
@@ -5111,9 +5157,9 @@ async function importJSON(ev){
     if(isSalesAnalyticsDataset(raw)){
       const sourceCount=raw.collections.salesDocuments.length;
       const activeCount=raw.collections.salesDocuments.filter(x=>x.status==='active'&&safeImportNumber(x?.totals?.saleTotal)>0&&x.date).length;
-      const ok=confirm(`ตรวจพบฐานข้อมูลยอดขายสำหรับวิเคราะห์\nทั้งหมด ${sourceCount.toLocaleString('th-TH')} เอกสาร\nรายการยอดขายที่จะใช้คำนวณ ${activeCount.toLocaleString('th-TH')} เอกสาร\n\nระบบจะรวมข้อมูลโดยไม่สร้างรายการซ้ำ${syncCloud?' และอัปโหลดขึ้น Firebase':''}\nดำเนินการต่อหรือไม่?`);
+      const ok=confirm(`ตรวจพบฐานข้อมูลยอดขายสำหรับวิเคราะห์\nทั้งหมด ${sourceCount.toLocaleString('th-TH')} เอกสาร\nรายการยอดขายที่จะใช้คำนวณ ${activeCount.toLocaleString('th-TH')} เอกสาร\n\nระบบจะรวมข้อมูลโดยไม่สร้างรายการซ้ำ${syncCloud?' และอัปโหลดขึ้น Cloud':''}\nดำเนินการต่อหรือไม่?`);
       if(!ok)return;
-      if(statusEl)statusEl.textContent=syncCloud?'กำลังนำเข้าในเครื่องและอัปโหลด Firebase...':'กำลังนำเข้าข้อมูลในเครื่อง...';
+      if(statusEl)statusEl.textContent=syncCloud?'กำลังนำเข้าในเครื่องและอัปโหลด Cloud...':'กำลังนำเข้าข้อมูลในเครื่อง...';
       const result=await importSalesAnalyticsDataset(raw,{syncCloud});
       onYearChange();initExportControls();renderDash();renderPList();populateProductionRefs();
       const cloudText=result.cloudStats?`\nFirebase: Production ${result.cloudStats.productionWrites} รายการ, คลังดิบ ${result.cloudStats.archiveWrites} รายการ`:'';

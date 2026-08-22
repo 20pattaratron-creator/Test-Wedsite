@@ -3,32 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Comform Esan ERP — Interactive Portfolio Demo</title>
+<title>NEXORA DATAWORKS — ERP & Business Analytics Demo</title>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="delivery-tax-document.css">
 <link rel="stylesheet" href="receipt-document.css">
-<link rel="stylesheet" href="demo-mode.css">
 </head>
 <body>
 
 <div id="app-content">
-<div class="demo-public-banner" role="status">
-  <div class="demo-public-copy">
-    <strong>PORTFOLIO DEMO</strong>
-    <span>ระบบสาธิตที่จำลองหน้าตาและ workflow จากระบบจริง — ข้อมูลที่ผู้ชมกรอกจะเก็บเฉพาะในเบราว์เซอร์เครื่องนี้ และไม่ส่งขึ้น Firebase/Google Drive</span>
-  </div>
-  <div class="demo-public-controls">
-    <button id="demo-reset-sample" type="button">↻ เติมข้อมูลตัวอย่างใหม่</button>
-    <button id="demo-clear-data" type="button">ล้างข้อมูลที่ทดสอบ</button>
-  </div>
-</div>
 <div class="topbar comform-topbar">
-  <img class="company-logo" src="./logo.png" alt="Comform Esan Logo">
+  <img class="company-logo" src="./logo.png" alt="NEXORA DATAWORKS Demo Logo">
   <div class="company-title-wrap">
-    <div class="company-main-title">Comform Esan ERP — Interactive Portfolio Demo</div>
-    <div class="company-sub-title">ระบบสาธิตงานขาย / เอกสาร / ฝ่ายผลิต / ค่าใช้จ่าย / Business Analytics</div>
+    <div class="company-main-title">NEXORA DATAWORKS — ERP & Business Analytics Demo</div>
+    <div class="company-sub-title">Portfolio Sandbox • ข้อมูลทั้งหมดเป็นข้อมูลสมมติ • ทดลองกรอกได้และเก็บเฉพาะใน Browser</div>
   </div>
   <span id="topbar-ctx" class="company-date"></span>
+</div>
+<div class="demo-public-banner" role="note">
+  <div><strong>PUBLIC PORTFOLIO DEMO</strong> — บริษัท ลูกค้า ผู้ผลิต ที่อยู่ เลขผู้เสียภาษี และตัวเลขในระบบนี้เป็นข้อมูลสมมติทั้งหมด</div>
+  <div class="demo-public-actions">
+    <button type="button" onclick="window.DemoMode?.showGuide()">? วิธีทดลอง</button>
+    <button type="button" onclick="window.DemoMode?.resetData()">↻ รีเซ็ตข้อมูล Demo</button>
+  </div>
 </div>
 
 <!-- DETAIL MODAL -->
@@ -72,9 +68,9 @@
 <!-- DASHBOARD -->
 <div id="panel-dashboard" class="panel active">
   <div class="dash-tabs">
-    <button class="dtab active" id="dt-all" onclick="switchDashTab('all')">รวมทั้ง 2 สาขา</button>
-    <button class="dtab kk" id="dt-kk" onclick="switchDashTab('khonkaen')">🔵 สาขาขอนแก่น</button>
-    <button class="dtab ub" id="dt-ub" onclick="switchDashTab('ubon')">🟣 สาขาอุบล</button>
+    <button class="dtab active" id="dt-all" onclick="switchDashTab('all')">รวมทุกหน่วยงาน</button>
+    <button class="dtab kk" id="dt-kk" onclick="switchDashTab('khonkaen')">🔵 สำนักงานใหญ่ (DEMO)</button>
+    <button class="dtab ub" id="dt-ub" onclick="switchDashTab('ubon')">🟣 สาขาทดลอง (DEMO)</button>
   </div>
 
   <!-- Filter row for dashboard -->
@@ -93,8 +89,8 @@
   <div id="dash-combined">
     <div class="metrics" id="metrics-total"></div>
     <div class="compare-grid">
-      <div class="bc kk"><div class="bname">🔵 สาขาขอนแก่น</div><div id="dash-kk-rows"></div></div>
-      <div class="bc ub"><div class="bname">🟣 สาขาอุบล</div><div id="dash-ub-rows"></div></div>
+      <div class="bc kk"><div class="bname">🔵 สำนักงานใหญ่ (DEMO)</div><div id="dash-kk-rows"></div></div>
+      <div class="bc ub"><div class="bname">🟣 สาขาทดลอง (DEMO)</div><div id="dash-ub-rows"></div></div>
     </div>
   </div>
   <div id="dash-single" style="display:none">
@@ -312,7 +308,7 @@
       <h2>ศูนย์วิเคราะห์ธุรกิจ</h2>
       <p>เปลี่ยนข้อมูลขาย ผลิต ส่งสินค้า รับเงิน และกลุ่มลูกค้าให้เป็น Business Insight สำหรับวางแผนยอดขาย เครดิตลูกค้า กำไร และการติดตามงาน</p>
     </div>
-    <button type="button" class="btn btn-ghost" onclick="refreshDataAnalytics(true)">↻ รีเฟรชข้อมูล Demo</button>
+    <button type="button" class="btn btn-ghost" onclick="refreshDataAnalytics(true)">↻ ดึงข้อมูลล่าสุด</button>
   </div>
 
   <div class="analytics-filter-card">
@@ -323,7 +319,7 @@
       <span>Action Plan: สิ่งที่ควรติดตาม</span>
     </div>
     <div class="analytics-filter-grid">
-      <label><span>สาขา</span><select id="analytics-branch" onchange="renderDataAnalytics()"><option value="">รวมทุกสาขา</option><option value="khonkaen">สาขาขอนแก่น</option><option value="ubon">สาขาอุบล</option></select></label>
+      <label><span>สาขา</span><select id="analytics-branch" onchange="renderDataAnalytics()"><option value="">รวมทุกสาขา</option><option value="khonkaen">สำนักงานใหญ่ (DEMO)</option><option value="ubon">สาขาทดลอง (DEMO)</option></select></label>
       <label><span>ปี</span><select id="analytics-year" onchange="renderDataAnalytics()"></select></label>
       <label><span>เดือน</span><select id="analytics-month" onchange="renderDataAnalytics()"><option value="">ทุกเดือน</option></select></label>
       <label><span>มุมมองหลัก</span><select id="analytics-focus" onchange="renderDataAnalytics()"><option value="sales">ภาพรวมธุรกิจ / กำไร</option><option value="delivery">ส่งสินค้า / เครดิต / รับเงิน</option><option value="quality">คุณภาพข้อมูล / ความเสี่ยง</option></select></label>
@@ -446,8 +442,8 @@
     <div class="ff-full">
       <label style="font-size:12px;color:var(--g2);font-weight:500;display:block;margin-bottom:6px">สาขา * <span style="color:var(--red)">— กรุณาเลือกสาขา</span></label>
       <div class="br-row">
-        <label class="br-opt" id="q-br-kk" onclick="selBr('q','khonkaen')"><input type="radio" name="q-br"> 🔵 สาขาขอนแก่น</label>
-        <label class="br-opt" id="q-br-ub" onclick="selBr('q','ubon')"><input type="radio" name="q-br"> 🟣 สาขาอุบล</label>
+        <label class="br-opt" id="q-br-kk" onclick="selBr('q','khonkaen')"><input type="radio" name="q-br"> 🔵 สำนักงานใหญ่ (DEMO)</label>
+        <label class="br-opt" id="q-br-ub" onclick="selBr('q','ubon')"><input type="radio" name="q-br"> 🟣 สาขาทดลอง (DEMO)</label>
       </div>
       <div class="br-warn" id="q-br-warn">⚠️ กรุณาเลือกสาขาก่อนบันทึก</div>
     </div>
@@ -500,8 +496,8 @@
     <div class="ff-full">
       <label style="font-size:12px;color:var(--g2);font-weight:500;display:block;margin-bottom:6px">สาขา * <span style="color:var(--red)">— กรุณาเลือกสาขา</span></label>
       <div class="br-row">
-        <label class="br-opt" id="i-br-kk" onclick="selBr('i','khonkaen')"><input type="radio" name="i-br"> 🔵 สาขาขอนแก่น</label>
-        <label class="br-opt" id="i-br-ub" onclick="selBr('i','ubon')"><input type="radio" name="i-br"> 🟣 สาขาอุบล</label>
+        <label class="br-opt" id="i-br-kk" onclick="selBr('i','khonkaen')"><input type="radio" name="i-br"> 🔵 สำนักงานใหญ่ (DEMO)</label>
+        <label class="br-opt" id="i-br-ub" onclick="selBr('i','ubon')"><input type="radio" name="i-br"> 🟣 สาขาทดลอง (DEMO)</label>
       </div>
       <div class="br-warn" id="i-br-warn">⚠️ กรุณาเลือกสาขาก่อนบันทึก</div>
     </div>
@@ -595,8 +591,8 @@
     <div class="ff-full">
       <label style="font-size:12px;color:var(--g2);font-weight:500;display:block;margin-bottom:6px">สาขา * <span style="color:var(--red)">— กรุณาเลือกสาขา</span></label>
       <div class="br-row">
-        <label class="br-opt" id="r-br-kk" onclick="selBr('r','khonkaen')"><input type="radio" name="r-br"> 🔵 สาขาขอนแก่น</label>
-        <label class="br-opt" id="r-br-ub" onclick="selBr('r','ubon')"><input type="radio" name="r-br"> 🟣 สาขาอุบล</label>
+        <label class="br-opt" id="r-br-kk" onclick="selBr('r','khonkaen')"><input type="radio" name="r-br"> 🔵 สำนักงานใหญ่ (DEMO)</label>
+        <label class="br-opt" id="r-br-ub" onclick="selBr('r','ubon')"><input type="radio" name="r-br"> 🟣 สาขาทดลอง (DEMO)</label>
       </div>
       <div class="br-warn" id="r-br-warn">⚠️ กรุณาเลือกสาขาก่อนบันทึก</div>
     </div>
@@ -678,12 +674,12 @@
     <div class="ff-full">
       <label style="font-size:14px;color:var(--g2);font-weight:700;display:block;margin-bottom:8px">สาขา * <span style="color:var(--red)">— กรุณาเลือกสาขา</span></label>
       <div class="br-row">
-        <label class="br-opt" id="p-br-kk" onclick="selBr('p','khonkaen')"><input type="radio" name="p-br"> 🔵 สาขาขอนแก่น</label>
-        <label class="br-opt" id="p-br-ub" onclick="selBr('p','ubon')"><input type="radio" name="p-br"> 🟣 สาขาอุบล</label>
+        <label class="br-opt" id="p-br-kk" onclick="selBr('p','khonkaen')"><input type="radio" name="p-br"> 🔵 สำนักงานใหญ่ (DEMO)</label>
+        <label class="br-opt" id="p-br-ub" onclick="selBr('p','ubon')"><input type="radio" name="p-br"> 🟣 สาขาทดลอง (DEMO)</label>
       </div>
       <div class="br-warn" id="p-br-warn">⚠️ กรุณาเลือกสาขาก่อนบันทึก</div>
     </div>
-    <div class="ff"><label>ผู้รับผลิต / ผู้สั่งผลิต *</label><input type="text" id="p-maker" list="production-maker-options" placeholder="เลือกจากรายชื่อ หรือพิมพ์ชื่อผู้ผลิตเอง" oninput="handleProductionMakerChange()" onchange="handleProductionMakerChange()"><datalist id="production-maker-options"><option value="คอมฟอร์มกรุงเทพ"></option><option value="จันชนา"></option><option value="68 computer"></option><option value="สุเทพการพิมพ์"></option><option value="PK"></option><option value="วิทยา"></option><option value="เมดิแคร์พลัส"></option><option value="เจ้าพระยา 41"></option><option value="โพรดิวส์ลาเบล"></option><option value="PW IT"></option><option value="ยูนิ - สมาร์ท"></option></datalist><small id="p-maker-preset-hint" class="section-hint">เลือกรายชื่อผู้ผลิตเพื่อให้ระบบจำกัดระยะเวลาส่งสินค้าและตั้งเครดิตผู้ผลิตให้อัตโนมัติ หรือพิมพ์ชื่ออื่นเองได้</small></div>
+    <div class="ff"><label>ผู้รับผลิต / ผู้สั่งผลิต *</label><input type="text" id="p-maker" list="production-maker-options" placeholder="เลือกจากรายชื่อ หรือพิมพ์ชื่อผู้ผลิตเอง" oninput="handleProductionMakerChange()" onchange="handleProductionMakerChange()"><datalist id="production-maker-options"><option value="โรงพิมพ์อัลฟาเดโม"></option><option value="เบต้าซัพพลายเดโม"></option><option value="เดโมเทคซิสเต็ม"></option><option value="แกมมาพริ้นท์เดโม"></option><option value="พีเคเดโมซัพพลาย"></option><option value="วิสต้าเดโมเซอร์วิส"></option><option value="เมดิเดโมพลัส"></option><option value="ริเวอร์เดโม 41"></option><option value="เดโมลาเบลเวิร์คส์"></option><option value="พีดับเบิลยูเดโมไอที"></option><option value="ยูนิเดโมสมาร์ท"></option></datalist><small id="p-maker-preset-hint" class="section-hint">เลือกรายชื่อผู้ผลิตเพื่อให้ระบบจำกัดระยะเวลาส่งสินค้าและตั้งเครดิตผู้ผลิตให้อัตโนมัติ หรือพิมพ์ชื่ออื่นเองได้</small></div>
     <div class="ff"><label>ชื่อลูกค้า *</label><input type="text" id="p-cust" placeholder="ชื่อลูกค้า" oninput="autoDetectCustomerAgency('p')"></div>
     <div class="ff customer-agency-field"><label>ประเภทหน่วยงาน</label><select id="p-agency-group" onchange="populateCustomerAgencyTypeOptions('p');renderCustomerAgencyHint('p')"></select></div>
     <div class="ff customer-agency-field"><label>ประเภทย่อย</label><select id="p-agency-type" onchange="renderCustomerAgencyHint('p')"></select><small id="p-agency-hint" class="section-hint">ระบบจะเดาจากชื่อย่อ เช่น สอ., สกก., รพ., รร., หจก., บจก.</small></div>
@@ -848,7 +844,7 @@
 <div id="panel-production-list" class="panel"><div class="card">
   <div class="card-title"><span>รายการสั่งผลิตสินค้า</span><button class="btn btn-ghost btn-sm" onclick="exportXLSX('productions')">⬇ Excel</button></div>
   <div class="filter-bar" style="margin-bottom:.75rem">
-    <div><label>สาขา</label><select id="pl-br" onchange="renderPList()"><option value="">ทุกสาขา</option><option value="khonkaen">สาขาขอนแก่น</option><option value="ubon">สาขาอุบล</option></select></div>
+    <div><label>สาขา</label><select id="pl-br" onchange="renderPList()"><option value="">ทุกสาขา</option><option value="khonkaen">สำนักงานใหญ่ (DEMO)</option><option value="ubon">สาขาทดลอง (DEMO)</option></select></div>
     <div><label>เดือน</label><select id="pl-month" onchange="renderPList()"><option value="">ทุกเดือน</option></select></div>
     <div><label>ปี</label><select id="pl-year" onchange="renderPList()"></select></div>
     <div><label>สถานะชำระผู้ผลิต</label>
@@ -876,8 +872,8 @@
     <div class="ff-full">
       <label style="font-size:12px;color:var(--g2);font-weight:500;display:block;margin-bottom:6px">สาขา * <span style="color:var(--red)">— กรุณาเลือกสาขา</span></label>
       <div class="br-row">
-        <label class="br-opt" id="e-br-kk" onclick="selBr('e','khonkaen')"><input type="radio" name="e-br"> 🔵 สาขาขอนแก่น</label>
-        <label class="br-opt" id="e-br-ub" onclick="selBr('e','ubon')"><input type="radio" name="e-br"> 🟣 สาขาอุบล</label>
+        <label class="br-opt" id="e-br-kk" onclick="selBr('e','khonkaen')"><input type="radio" name="e-br"> 🔵 สำนักงานใหญ่ (DEMO)</label>
+        <label class="br-opt" id="e-br-ub" onclick="selBr('e','ubon')"><input type="radio" name="e-br"> 🟣 สาขาทดลอง (DEMO)</label>
       </div>
       <div class="br-warn" id="e-br-warn">⚠️ กรุณาเลือกสาขาก่อนบันทึก</div>
     </div>
@@ -913,7 +909,7 @@
   </div>
   <div class="filter-bar" style="margin-bottom:.75rem">
     <div><label>สาขา</label>
-      <select id="ql-br" onchange="renderQLList()"><option value="">ทุกสาขา</option><option value="khonkaen">สาขาขอนแก่น</option><option value="ubon">สาขาอุบล</option></select>
+      <select id="ql-br" onchange="renderQLList()"><option value="">ทุกสาขา</option><option value="khonkaen">สำนักงานใหญ่ (DEMO)</option><option value="ubon">สาขาทดลอง (DEMO)</option></select>
     </div>
     <div><label>เดือน</label>
       <select id="ql-month" onchange="renderQLList()"><option value="">ทุกเดือน</option></select>
@@ -936,7 +932,7 @@
   </div>
   <div class="filter-bar" style="margin-bottom:.75rem">
     <div><label>สาขา</label>
-      <select id="il-br" onchange="renderIList()"><option value="">ทุกสาขา</option><option value="khonkaen">สาขาขอนแก่น</option><option value="ubon">สาขาอุบล</option></select>
+      <select id="il-br" onchange="renderIList()"><option value="">ทุกสาขา</option><option value="khonkaen">สำนักงานใหญ่ (DEMO)</option><option value="ubon">สาขาทดลอง (DEMO)</option></select>
     </div>
     <div><label>เดือน</label>
       <select id="il-month" onchange="renderIList()"><option value="">ทุกเดือน</option></select>
@@ -989,7 +985,7 @@
   </div>
   <div class="filter-bar" style="margin-bottom:.75rem">
     <div><label>สาขา</label>
-      <select id="rl-br" onchange="renderRList()"><option value="">ทุกสาขา</option><option value="khonkaen">สาขาขอนแก่น</option><option value="ubon">สาขาอุบล</option></select>
+      <select id="rl-br" onchange="renderRList()"><option value="">ทุกสาขา</option><option value="khonkaen">สำนักงานใหญ่ (DEMO)</option><option value="ubon">สาขาทดลอง (DEMO)</option></select>
     </div>
     <div><label>เดือน</label>
       <select id="rl-month" onchange="renderRList()"><option value="">ทุกเดือน</option></select>
@@ -1009,7 +1005,7 @@
 <div id="panel-issued-invoice-list" class="panel"><div class="card">
   <div class="card-title"><span>ข้อมูลออกบิลใบส่งของ / ใบกำกับภาษี</span><span class="section-hint">ข้อมูลเอกสารที่ออกจริง แยกจากหลักฐานที่ใช้คำนวณแดชบอร์ด</span></div>
   <div class="filter-bar" style="margin-bottom:.75rem">
-    <div><label>สาขา</label><select id="oil-br" onchange="renderIssuedInvoiceList()"><option value="">ทุกสาขา</option><option value="khonkaen">สาขาขอนแก่น</option><option value="ubon">สาขาอุบล</option></select></div>
+    <div><label>สาขา</label><select id="oil-br" onchange="renderIssuedInvoiceList()"><option value="">ทุกสาขา</option><option value="khonkaen">สำนักงานใหญ่ (DEMO)</option><option value="ubon">สาขาทดลอง (DEMO)</option></select></div>
     <div><label>เดือน</label><select id="oil-month" onchange="renderIssuedInvoiceList()"><option value="">ทุกเดือน</option></select></div>
     <div><label>ปี</label><select id="oil-year" onchange="renderIssuedInvoiceList()"></select></div>
     <div><label>ค้นหา</label><input type="text" id="oil-search" placeholder="เลขที่ / ลูกค้า / พนักงาน" oninput="renderIssuedInvoiceList()"></div>
@@ -1022,7 +1018,7 @@
 <div id="panel-issued-receipt-list" class="panel"><div class="card">
   <div class="card-title"><span>ข้อมูลออกใบเสร็จรับเงิน</span><span class="section-hint">ข้อมูลเอกสารที่ออกจริง แยกจากหลักฐานที่ใช้คำนวณแดชบอร์ด</span></div>
   <div class="filter-bar" style="margin-bottom:.75rem">
-    <div><label>สาขา</label><select id="orl-br" onchange="renderIssuedReceiptList()"><option value="">ทุกสาขา</option><option value="khonkaen">สาขาขอนแก่น</option><option value="ubon">สาขาอุบล</option></select></div>
+    <div><label>สาขา</label><select id="orl-br" onchange="renderIssuedReceiptList()"><option value="">ทุกสาขา</option><option value="khonkaen">สำนักงานใหญ่ (DEMO)</option><option value="ubon">สาขาทดลอง (DEMO)</option></select></div>
     <div><label>เดือน</label><select id="orl-month" onchange="renderIssuedReceiptList()"><option value="">ทุกเดือน</option></select></div>
     <div><label>ปี</label><select id="orl-year" onchange="renderIssuedReceiptList()"></select></div>
     <div><label>ค้นหา</label><input type="text" id="orl-search" placeholder="เลขที่ / เลขบิล / ลูกค้า" oninput="renderIssuedReceiptList()"></div>
@@ -1038,7 +1034,7 @@
   </div>
   <div class="filter-bar" style="margin-bottom:.75rem">
     <div><label>สาขา</label>
-      <select id="el-br" onchange="renderEList()"><option value="">ทุกสาขา</option><option value="khonkaen">สาขาขอนแก่น</option><option value="ubon">สาขาอุบล</option></select>
+      <select id="el-br" onchange="renderEList()"><option value="">ทุกสาขา</option><option value="khonkaen">สำนักงานใหญ่ (DEMO)</option><option value="ubon">สาขาทดลอง (DEMO)</option></select>
     </div>
     <div><label>เดือน</label>
       <select id="el-month" onchange="renderEList()"><option value="">ทุกเดือน</option></select>
@@ -1060,13 +1056,13 @@
       <h2>ศูนย์เชื่อมโยงเอกสาร</h2>
       <p>ติดตามสายงานตั้งแต่รายการสั่งผลิต → ระยะเวลาในการส่งสินค้า → หลักฐานใบส่งสินค้า → เครดิตการชำระของลูกค้า → หลักฐานใบเสร็จรับเงิน โดยกรองตามสาขา เดือน และปี</p>
     </div>
-    <button type="button" class="btn btn-ghost" onclick="refreshLinkedFlow(true)">↻ รีเฟรชข้อมูล Demo</button>
+    <button type="button" class="btn btn-ghost" onclick="refreshLinkedFlow(true)">↻ ดึงข้อมูลล่าสุด</button>
   </div>
   <div class="linked-filter-card">
     <div class="linked-branch-switch" role="group" aria-label="เลือกสาขา">
       <button type="button" data-linked-branch="" class="active" onclick="setLinkedBranch('',this)">รวมทุกสาขา</button>
-      <button type="button" data-linked-branch="khonkaen" onclick="setLinkedBranch('khonkaen',this)"><span class="branch-dot kk"></span>ขอนแก่น</button>
-      <button type="button" data-linked-branch="ubon" onclick="setLinkedBranch('ubon',this)"><span class="branch-dot ub"></span>อุบล</button>
+      <button type="button" data-linked-branch="khonkaen" onclick="setLinkedBranch('khonkaen',this)"><span class="branch-dot kk"></span>สำนักงานใหญ่</button>
+      <button type="button" data-linked-branch="ubon" onclick="setLinkedBranch('ubon',this)"><span class="branch-dot ub"></span>สาขาทดลอง</button>
     </div>
     <div class="linked-filter-grid">
       <label><span>ปี</span><select id="linked-year" onchange="renderLinkedFlow()"></select></label>
@@ -1095,9 +1091,9 @@
         <div class="ff">
           <label>สาขา</label>
           <select id="ex-branch">
-            <option value="">รวมทั้งสองสาขา</option>
-            <option value="khonkaen">สาขาขอนแก่น</option>
-            <option value="ubon">สาขาอุบล</option>
+            <option value="">รวมทุกหน่วยงาน</option>
+            <option value="khonkaen">สำนักงานใหญ่ (DEMO)</option>
+            <option value="ubon">สาขาทดลอง (DEMO)</option>
           </select>
         </div>
         <div class="ff">
@@ -1132,7 +1128,7 @@
       <div class="export-box-title">🗂️ ไฟล์รวมและนำเข้าข้อมูล</div>
       <p class="export-help">รองรับทั้งไฟล์ Backup JSON ของระบบ และไฟล์ฐานข้อมูลยอดขาย <code>firebase-sales-*.json</code> ที่จัดทำจาก Excel</p>
       <div class="import-json-options">
-        <label><input id="import-sync-cloud" type="checkbox" disabled> Demo mode: ไม่อัปโหลดขึ้น Firebase</label>
+        <label><input id="import-sync-cloud" type="checkbox" disabled> Demo Mode: เก็บข้อมูลเฉพาะใน Browser</label>
         <label>Backup JSON:
           <select id="import-mode">
             <option value="merge">รวมกับข้อมูลเดิมและตัดรายการซ้ำ</option>
@@ -1141,7 +1137,7 @@
         </label>
       </div>
       <div class="import-json-note">
-        ไฟล์ฐานข้อมูลยอดขายจะนำเฉพาะรายการสถานะปกติที่มียอดขายไปใช้คำนวณใน <b>ยอดขาย</b> และช่วงเดือน 1–6 ปี พ.ศ. 2569 ระบบจะสะท้อนยอดเดียวกันไปเป็น <b>ยอดส่งสินค้า</b> บน Dashboard/Analytics โดยไม่สร้างเอกสารใบส่งสินค้าซ้ำ ส่วนข้อมูลทั้งหมดใน Demo จะเก็บเฉพาะ <code>localStorage / IndexedDB</code> ของเบราว์เซอร์ผู้ทดสอบ
+        ไฟล์ฐานข้อมูลยอดขายจะนำเฉพาะรายการสถานะปกติที่มียอดขายไปใช้คำนวณใน <b>ยอดขาย</b> และช่วงเดือน 1–6 ปี พ.ศ. 2569 ระบบจะสะท้อนยอดเดียวกันไปเป็น <b>ยอดส่งสินค้า</b> บน Dashboard/Analytics โดยไม่สร้างเอกสารใบส่งสินค้าซ้ำ ข้อมูลที่นำเข้าจะถูกเก็บเฉพาะใน Browser ของผู้เข้าชม และไม่ถูกส่งไปยังฐานข้อมูลภายนอก
       </div>
       <div class="export-actions">
         <button class="btn btn-purple" onclick="exportAllExcel()">⬇ Excel รวมทุกปี</button>
@@ -1149,7 +1145,7 @@
         <label class="btn btn-green" style="cursor:pointer">⬆ Import JSON / ฐานข้อมูลยอดขาย
           <input type="file" accept=".json,application/json" style="display:none" onchange="importJSON(event)">
         </label>
-        <button class="btn btn-ghost" type="button" disabled title="ปิดใช้งานใน Portfolio Demo">🛠 Cloud repair (ปิดใน Demo)</button>
+        <button class="btn btn-ghost" type="button" onclick="repairHistoricalImportData()">🛠 ซ่อมข้อมูลเดิม / เพิ่มวันที่ พ.ศ.</button>
       </div>
       <div id="import-json-status" class="import-json-status">ยังไม่มีการนำเข้าไฟล์</div>
     </div>
@@ -1160,15 +1156,11 @@
 
 </div><!-- /app-content -->
 
-<script src="./demo-mode.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script type="module" src="./local-file-store.js"></script>
-<script type="module" src="./click-fallback.js"></script>
-<script type="module" src="./app.js"></script>
-<script type="module" src="./delivery-tax-document.js"></script>
-<script type="module" src="./receipt-document.js"></script>
-<script type="module" src="./demo-ui.js"></script>
+<script src="demo-mode.js"></script>
+<script type="module" src="local-file-store.js"></script>
+<script type="module" src="click-fallback.js"></script>
+<script type="module" src="app.js"></script>
+<script type="module" src="delivery-tax-document.js"></script>
+<script type="module" src="receipt-document.js"></script>
 </body>
 </html>
