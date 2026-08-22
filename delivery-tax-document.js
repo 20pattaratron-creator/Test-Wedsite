@@ -1,5 +1,5 @@
-const html2canvas = window.html2canvas;
-const jsPDF = window.jspdf?.jsPDF;
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 const DTD_STORAGE_KEY = 'comform_delivery_tax_document_draft_v1';
 const MAX_ITEMS = 60;
@@ -11,21 +11,21 @@ let pdfLogoDataUrl = '';
 const BRANCH_DEFAULTS = {
   khonkaen: {
     label: 'สาขาขอนแก่น',
-    companyNameTh: 'บริษัท คอมฟอร์มอีสาน จำกัด — Portfolio Demo (สาขาขอนแก่น)',
-    companyNameEn: 'COMFORM ESAN CO., LTD. — PORTFOLIO DEMO — PORTFOLIO DEMO (KHON KAEN)',
-    addressTh: '99/9 ถนนตัวอย่าง ตำบลในเมือง อำเภอเมืองขอนแก่น จังหวัดขอนแก่น 40000',
-    addressEn: '99/9 Demo Rd., Nai Mueang, Mueang Khon Kaen, Khon Kaen 40000',
-    phone: '000-000-0000',
-    taxId: '0000000000000'
+    companyNameTh: 'บริษัท คอมฟอร์มอีสาน จำกัด (สาขาขอนแก่น) สาขาที่ 00001',
+    companyNameEn: 'COMFORM ESAN CO., LTD. (BRANCH KHONKAEN) Branch 00001',
+    addressTh: '22/7 หมู่ 17 ตำบลในเมือง อำเภอเมืองขอนแก่น จังหวัดขอนแก่น 40000',
+    addressEn: '22/7 Moo 17 T.Nai-Muang A.Muang Khonkaen Khonkaen 40000',
+    phone: '082-3160881, 089-4921941',
+    taxId: '0435548000010'
   },
   ubon: {
     label: 'สาขาอุบล',
-    companyNameTh: 'บริษัท คอมฟอร์ม อีสาน จำกัด — Portfolio Demo (สำนักงานใหญ่)',
-    companyNameEn: 'COMFORM ESAN CO., LTD. — PORTFOLIO DEMO',
-    addressTh: '88/8 ถนนตัวอย่าง ตำบลในเมือง อำเภอเมือง จังหวัดอุบลราชธานี 34000',
-    addressEn: '88/8 Demo Rd., Nai Mueang, Mueang Ubon Ratchathani 34000',
-    phone: 'Tel: 000-000-0000',
-    taxId: '0000000000000'
+    companyNameTh: 'บริษัท คอมฟอร์ม อีสาน จำกัด (สำนักงานใหญ่)',
+    companyNameEn: 'COMFORM ESAN CO., LTD.',
+    addressTh: '164/3 ถนนอุบล-ตระการ ตำบลในเมือง อำเภอเมือง จังหวัดอุบลราชธานี 34000',
+    addressEn: '164/3 Ubon-Trakarn Rd. T.Nai-Muang A.Muang Ubonratchathani 34000',
+    phone: 'Tel: 0-4524-0661, 2   Fax: 0-4524-0663',
+    taxId: '0345548000010'
   }
 };
 
