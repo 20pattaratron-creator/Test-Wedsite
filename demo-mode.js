@@ -1,7 +1,7 @@
 (() => {
   'use strict';
-  const VERSION='nexora-public-demo-v2';
-  const SEED_FLAG='nexora_demo_seed_version';
+  const VERSION='demo-works-public-v3';
+  const SEED_FLAG='demo_works_seed_version';
   const branches=['khonkaen','ubon'];
   const now=new Date();
   const year=now.getFullYear();
@@ -26,7 +26,7 @@
   function expense(id,b,m,d,desc,amount){return {id,date:iso(year,m,d),branch:b,cat:'ค่าใช้จ่ายสำนักงาน',desc,amount,by:'Demo User',note:'ข้อมูลสมมติ'};}
   function clearBiz(){
     const remove=[];
-    for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k && (k.startsWith('biz2_')||k.startsWith('nexora_demo_')||k.startsWith('comform_')))remove.push(k);}
+    for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k && (k.startsWith('biz2_')||k.startsWith('demo_works_')||k.startsWith('nexora_demo_')||k.startsWith('comform_')))remove.push(k);}
     remove.forEach(k=>localStorage.removeItem(k));
   }
   function seed(force=false){
@@ -59,10 +59,29 @@
     seed(true); location.reload();
   }
   function showGuide(){
-    alert('วิธีทดลองระบบ Portfolio Demo\n\n1) เลือกเมนูใบเสนอราคา หรือสั่งผลิตสินค้า\n2) เลือกสาขา DEMO และกรอกข้อมูลได้ตามต้องการ\n3) กดบันทึก แล้วกลับ Dashboard / Business Analytics เพื่อดูผล\n4) ทดลองสร้างหลักฐานใบส่งสินค้าและใบเสร็จเพื่อดู Linked Workflow\n5) ข้อมูลทั้งหมดเก็บเฉพาะ Browser เครื่องนี้ ไม่มี Firebase และไม่ส่งเข้าระบบบริษัทจริง\n6) กด “รีเซ็ตข้อมูล Demo” เพื่อคืนค่าเริ่มต้นได้ทุกเมื่อ');
+    alert('วิธีทดลองระบบ Portfolio Demo\n\n1) เลือกเมนูใบเสนอราคา หรือสั่งผลิตสินค้า\n2) เลือกสาขา DEMO และกรอกข้อมูลได้ตามต้องการ\n3) กดบันทึก แล้วกลับ Dashboard / Business Analytics เพื่อดูผล\n4) เปิดเมนู “ออกใบส่งสินค้า/ภาษี” เพื่อทดลองหน้าจอเอกสารแบบเรียลไทม์ตามระบบจริง\n5) เลือกใบสั่งผลิตจากข้อมูล Demo แล้วระบบจะดึงลูกค้า/รายการสินค้าเข้าฟอร์ม\n6) ทดลองสร้างหลักฐานใบส่งสินค้าและใบเสร็จเพื่อดู Linked Workflow\n7) ข้อมูลทั้งหมดเก็บเฉพาะ Browser เครื่องนี้ ไม่มี Firebase จริง และไม่ส่งเข้าระบบบริษัทจริง\n8) กด “รีเซ็ตข้อมูล Demo” เพื่อคืนค่าเริ่มต้นได้ทุกเมื่อ');
   }
-  window.CurrentUser={uid:'public-demo',email:'demo@nexora.invalid',displayName:'Portfolio Visitor',branch:'all',role:'demo'};
+  window.CurrentUser={uid:'public-demo',email:'visitor@demo.invalid',displayName:'Portfolio Visitor',branch:'all',role:'demo'};
   window.ComformAuth={getCurrentProfile:()=>window.CurrentUser};
+
+  // Local-only service shim: keeps the document modules working on GitHub Pages
+  // without connecting to Firebase. It reads the same monthly browser store as app.js.
+  window.FirebaseService={
+    async loadCollectionByYear(collection, targetYear){
+      const rows=[];
+      for(const branch of branches){
+        for(let m=0;m<12;m++){
+          try{
+            const pack=JSON.parse(localStorage.getItem(key(branch,Number(targetYear),m))||'null');
+            const list=Array.isArray(pack?.[collection])?pack[collection]:[];
+            list.forEach((record,index)=>rows.push({...record,branch:record.branch||branch,year:Number(targetYear),month:Number(record.month??m),monthIndex:Number(record.monthIndex??m),firebaseId:record.firebaseId||'',__localIndex:index}));
+          }catch(err){ console.warn('Demo local read failed',err); }
+        }
+      }
+      return rows;
+    }
+  };
+
   window.DemoMode={seed,resetData,showGuide,version:VERSION};
   seed(false);
   document.addEventListener('DOMContentLoaded',()=>{

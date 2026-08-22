@@ -5,25 +5,25 @@ const DTD_STORAGE_KEY = 'nexora_demo_delivery_tax_document_v1';
 const MAX_ITEMS = 60;
 const ITEM_UNITS_PER_PAGE = 8;
 const BLUE = '#0868c9';
-const COMPANY_LOGO_URL = new URL('./logo.png', import.meta.url).href;
+const COMPANY_LOGO_URL = new URL('./demo-logo.svg', import.meta.url).href;
 let pdfLogoDataUrl = '';
 
 const BRANCH_DEFAULTS = {
   khonkaen: {
     label: 'สำนักงานใหญ่ (DEMO)',
-    companyNameTh: 'บริษัท เน็กซอรา ดาต้าเวิร์คส์ จำกัด (บริษัทสมมติสำหรับสาธิต)',
-    companyNameEn: 'NEXORA DATAWORKS CO., LTD. (FICTIONAL DEMO COMPANY)',
-    addressTh: '99/9 ถนนนวัตกรรม ตำบลดิจิทัล อำเภอเมืองตัวอย่าง จังหวัดนครราชสีมา 30000',
-    addressEn: '99/9 Innovation Rd., Digital Subdistrict, Demo City, Nakhon Ratchasima 30000, Thailand',
+    companyNameTh: 'บริษัท เดโมเวิร์คส์ โซลูชันส์ 999 จำกัด — PORTFOLIO DEMO',
+    companyNameEn: 'DEMO WORKS SOLUTIONS 999 CO., LTD. — FICTIONAL PORTFOLIO COMPANY',
+    addressTh: '99/9 ถนนนวัตกรรมเดโม ตำบลตัวอย่าง อำเภอเมืองสมมติ จังหวัดนครราชสีมา 30000',
+    addressEn: '99/9 Demo Innovation Rd., Example Subdistrict, Fictional City, Nakhon Ratchasima 30000, Thailand',
     phone: '000-000-0000 (DEMO)',
     taxId: '0000000000000'
   },
   ubon: {
     label: 'สาขาทดลอง (DEMO)',
-    companyNameTh: 'บริษัท เน็กซอรา ดาต้าเวิร์คส์ จำกัด (สาขาทดลอง 00001)',
-    companyNameEn: 'NEXORA DATAWORKS CO., LTD. (DEMO BRANCH 00001)',
-    addressTh: '88/8 ถนนข้อมูล ตำบลตัวอย่าง อำเภอเมืองตัวอย่าง จังหวัดขอนแก่น 40000',
-    addressEn: '88/8 Data Rd., Example Subdistrict, Demo City, Khon Kaen 40000, Thailand',
+    companyNameTh: 'บริษัท เดโมเวิร์คส์ โซลูชันส์ 999 จำกัด (สาขาตัวอย่าง 00001)',
+    companyNameEn: 'DEMO WORKS SOLUTIONS 999 CO., LTD. (FICTIONAL BRANCH 00001)',
+    addressTh: '88/8 ถนนดาต้าเดโม ตำบลตัวอย่าง อำเภอเมืองสมมติ จังหวัดขอนแก่น 40000',
+    addressEn: '88/8 Demo Data Rd., Example Subdistrict, Fictional City, Khon Kaen 40000, Thailand',
     phone: '000-000-0001 (DEMO)',
     taxId: '0000000000000'
   }
@@ -267,10 +267,7 @@ function mountFeature() {
       </svg>
       ออกใบส่งสินค้า/ภาษี
     `;
-    nav.addEventListener('click', () => {
-      window.go?.('delivery-tax-doc', nav);
-      renderAll();
-    });
+    nav.addEventListener('click', () => openDeliveryTaxDemo(nav));
 
     if (productionSec) {
       productionSec.insertAdjacentElement('beforebegin', nav);
@@ -297,6 +294,14 @@ function mountFeature() {
   loadProductionOptions();
 }
 
+function openDeliveryTaxDemo(el = null) {
+  const nav = el || document.querySelector('.dtd-nav-item');
+  window.go?.('delivery-tax-doc', nav || null);
+  renderAll();
+  loadProductionOptions();
+}
+window.openDeliveryTaxDemo = openDeliveryTaxDemo;
+
 function renderAppShell() {
   const root = document.getElementById('delivery-tax-app');
   if (!root) return;
@@ -306,7 +311,7 @@ function renderAppShell() {
         <div class="dtd-brand-title">
           <img src="${COMPANY_LOGO_URL}" alt="โลโก้บริษัท">
           <div>
-            <div class="dtd-company-mini">บริษัท เน็กซอรา ดาต้าเวิร์คส์ จำกัด (DEMO)</div>
+            <div class="dtd-company-mini">บริษัท เดโมเวิร์คส์ โซลูชันส์ 999 จำกัด (DEMO)</div>
             <h2>ออกใบส่งสินค้า / ใบกำกับภาษี</h2>
           </div>
         </div>
@@ -871,7 +876,7 @@ function documentPageHtml(pageType, pdfMode = false, pageInfo = {}) {
       </div>
       <header class="dtd-doc-header">
         <div class="dtd-doc-company">
-          <img src="${logoSrc}" alt="NEXORA DATAWORKS" crossorigin="anonymous" decoding="sync">
+          <img src="${logoSrc}" alt="DEMO WORKS 999" crossorigin="anonymous" decoding="sync">
           <div>
             <div class="dtd-doc-company-th">${escapeHtml(company.companyNameTh)}</div>
             <div class="dtd-doc-company-en">${escapeHtml(company.companyNameEn)}</div>
@@ -938,7 +943,7 @@ function documentPageHtml(pageType, pdfMode = false, pageInfo = {}) {
         <img class="dtd-doc-watermark" src="${logoSrc}" alt="" crossorigin="anonymous" decoding="sync">
         <div class="dtd-doc-bottom-area">
           <div class="dtd-doc-payment-note">
-            <div>โปรดชำระเงินเข้าบัญชีของบริษัท <b>บริษัท เน็กซอรา ดาต้าเวิร์คส์ จำกัด (DEMO)</b></div>
+            <div>โปรดชำระเงินเข้าบัญชีของบริษัท <b>บริษัท เดโมเวิร์คส์ โซลูชันส์ 999 จำกัด (DEMO)</b></div>
             <div>• สินค้าตามรายการข้างต้นยังเป็นกรรมสิทธิ์ของบริษัทฯ จนกว่าจะได้รับชำระเงินครบถ้วน</div>
             ${state.note ? `<div>หมายเหตุ: ${escapeHtml(state.note)}</div>` : ''}
             ${!isFinalPage ? `<div class="dtd-doc-next-page-note">รายการต่อหน้าถัดไป (${pageNumber + 1}/${totalPages})</div>` : ''}
@@ -1256,9 +1261,17 @@ function showUploadedTemplate() {
   box.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+
+function openRequestedDemoPage() {
+  const params = new URLSearchParams(window.location.search);
+  const page = params.get('page') || String(window.location.hash || '').replace(/^#/, '');
+  if (['delivery-tax-doc','delivery','invoice-demo'].includes(page)) {
+    setTimeout(() => openDeliveryTaxDemo(), 0);
+  }
+}
 window.addEventListener('comform-auth-ready', () => {
   if (document.getElementById('delivery-tax-app')) applyLockedBranch();
 });
 
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountFeature);
-else mountFeature();
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => { mountFeature(); openRequestedDemoPage(); });
+else { mountFeature(); openRequestedDemoPage(); }

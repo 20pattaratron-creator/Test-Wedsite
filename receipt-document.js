@@ -5,7 +5,7 @@ const RCP_STORAGE_KEY = 'nexora_demo_receipt_document_v1';
 const MAX_ITEMS = 60;
 const ITEM_UNITS_PER_PAGE = 8;
 const BLUE = '#0868c9';
-const COMPANY_LOGO_URL = new URL('./logo.png', import.meta.url).href;
+const COMPANY_LOGO_URL = new URL('./demo-logo.svg', import.meta.url).href;
 let pdfLogoDataUrl = '';
 
 /**
@@ -51,19 +51,19 @@ function tintReceiptLogoGreen(dataUrl) {
 const BRANCH_DEFAULTS = {
   khonkaen: {
     label: 'สำนักงานใหญ่ (DEMO)',
-    companyNameTh: 'บริษัท เน็กซอรา ดาต้าเวิร์คส์ จำกัด (บริษัทสมมติสำหรับสาธิต)',
-    companyNameEn: 'NEXORA DATAWORKS CO., LTD. (FICTIONAL DEMO COMPANY)',
-    addressTh: '99/9 ถนนนวัตกรรม ตำบลดิจิทัล อำเภอเมืองตัวอย่าง จังหวัดนครราชสีมา 30000',
-    addressEn: '99/9 Innovation Rd., Digital Subdistrict, Demo City, Nakhon Ratchasima 30000, Thailand',
+    companyNameTh: 'บริษัท เดโมเวิร์คส์ โซลูชันส์ 999 จำกัด — PORTFOLIO DEMO',
+    companyNameEn: 'DEMO WORKS SOLUTIONS 999 CO., LTD. — FICTIONAL PORTFOLIO COMPANY',
+    addressTh: '99/9 ถนนนวัตกรรมเดโม ตำบลตัวอย่าง อำเภอเมืองสมมติ จังหวัดนครราชสีมา 30000',
+    addressEn: '99/9 Demo Innovation Rd., Example Subdistrict, Fictional City, Nakhon Ratchasima 30000, Thailand',
     phone: '000-000-0000 (DEMO)',
     taxId: '0000000000000'
   },
   ubon: {
     label: 'สาขาทดลอง (DEMO)',
-    companyNameTh: 'บริษัท เน็กซอรา ดาต้าเวิร์คส์ จำกัด (สาขาทดลอง 00001)',
-    companyNameEn: 'NEXORA DATAWORKS CO., LTD. (DEMO BRANCH 00001)',
-    addressTh: '88/8 ถนนข้อมูล ตำบลตัวอย่าง อำเภอเมืองตัวอย่าง จังหวัดขอนแก่น 40000',
-    addressEn: '88/8 Data Rd., Example Subdistrict, Demo City, Khon Kaen 40000, Thailand',
+    companyNameTh: 'บริษัท เดโมเวิร์คส์ โซลูชันส์ 999 จำกัด (สาขาตัวอย่าง 00001)',
+    companyNameEn: 'DEMO WORKS SOLUTIONS 999 CO., LTD. (FICTIONAL BRANCH 00001)',
+    addressTh: '88/8 ถนนดาต้าเดโม ตำบลตัวอย่าง อำเภอเมืองสมมติ จังหวัดขอนแก่น 40000',
+    addressEn: '88/8 Demo Data Rd., Example Subdistrict, Fictional City, Khon Kaen 40000, Thailand',
     phone: '000-000-0001 (DEMO)',
     taxId: '0000000000000'
   }
@@ -340,7 +340,7 @@ function renderAppShell() {
         <div class="rcp-brand-title">
           <img src="${COMPANY_LOGO_URL}" alt="โลโก้บริษัท">
           <div>
-            <div class="rcp-company-mini">บริษัท เน็กซอรา ดาต้าเวิร์คส์ จำกัด (DEMO)</div>
+            <div class="rcp-company-mini">บริษัท เดโมเวิร์คส์ โซลูชันส์ 999 จำกัด (DEMO)</div>
             <h2>ออกใบเสร็จรับเงิน</h2>
           </div>
         </div>
@@ -1035,7 +1035,7 @@ function documentPageHtml(pageType, pdfMode = false, pageInfo = {}) {
       </div>
       <header class="rcp-doc-header">
         <div class="rcp-doc-company">
-          <img src="${logoSrc}" alt="NEXORA DATAWORKS" crossorigin="anonymous" decoding="sync">
+          <img src="${logoSrc}" alt="DEMO WORKS 999" crossorigin="anonymous" decoding="sync">
           <div>
             <div class="rcp-doc-company-th">${escapeHtml(company.companyNameTh)}</div>
             <div class="rcp-doc-company-en">${escapeHtml(company.companyNameEn)}</div>
@@ -1099,7 +1099,7 @@ function documentPageHtml(pageType, pdfMode = false, pageInfo = {}) {
         <img class="rcp-doc-watermark" src="${logoSrc}" alt="" crossorigin="anonymous" decoding="sync">
         <div class="rcp-doc-bottom-area">
           <div class="rcp-doc-payment-note">
-            <div>โปรดชำระเงินเข้าบัญชีของบริษัท <b>บริษัท เน็กซอรา ดาต้าเวิร์คส์ จำกัด (DEMO)</b></div>
+            <div>โปรดชำระเงินเข้าบัญชีของบริษัท <b>บริษัท เดโมเวิร์คส์ โซลูชันส์ 999 จำกัด (DEMO)</b></div>
             <div>ได้รับชำระเงินตามรายการข้างต้นเรียบร้อยแล้ว</div>
             ${state.note ? `<div>หมายเหตุ: ${escapeHtml(state.note)}</div>` : ''}
             ${!isFinalPage ? `<div class="rcp-doc-next-page-note">รายการต่อหน้าถัดไป (${pageNumber + 1}/${totalPages})</div>` : ''}

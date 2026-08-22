@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NEXORA DATAWORKS — ERP & Business Analytics Demo</title>
+<title>DEMO WORKS 999 — ERP & Business Analytics Portfolio Demo</title>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="delivery-tax-document.css">
 <link rel="stylesheet" href="receipt-document.css">
@@ -12,9 +12,9 @@
 
 <div id="app-content">
 <div class="topbar comform-topbar">
-  <img class="company-logo" src="./logo.png" alt="NEXORA DATAWORKS Demo Logo">
+  <img class="company-logo" src="./demo-logo.svg" alt="DEMO WORKS 999 Logo">
   <div class="company-title-wrap">
-    <div class="company-main-title">NEXORA DATAWORKS — ERP & Business Analytics Demo</div>
+    <div class="company-main-title">DEMO WORKS 999 — ERP & Business Analytics Portfolio Demo</div>
     <div class="company-sub-title">Portfolio Sandbox • ข้อมูลทั้งหมดเป็นข้อมูลสมมติ • ทดลองกรอกได้และเก็บเฉพาะใน Browser</div>
   </div>
   <span id="topbar-ctx" class="company-date"></span>
@@ -22,6 +22,7 @@
 <div class="demo-public-banner" role="note">
   <div><strong>PUBLIC PORTFOLIO DEMO</strong> — บริษัท ลูกค้า ผู้ผลิต ที่อยู่ เลขผู้เสียภาษี และตัวเลขในระบบนี้เป็นข้อมูลสมมติทั้งหมด</div>
   <div class="demo-public-actions">
+    <button type="button" class="demo-open-delivery" onclick="window.openDeliveryTaxDemo?.()">🧾 เปิดหน้าออกใบส่งสินค้า/ภาษี</button>
     <button type="button" onclick="window.DemoMode?.showGuide()">? วิธีทดลอง</button>
     <button type="button" onclick="window.DemoMode?.resetData()">↻ รีเซ็ตข้อมูล Demo</button>
   </div>
@@ -45,6 +46,8 @@
   <div class="nav-item" onclick="go('quote-form',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>ใบเสนอราคา</div>
   <div class="nav-item" onclick="go('invoice-form',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7-7 7 7"/></svg>หลักฐานใบส่งสินค้า</div>
   <div class="nav-item" onclick="go('receipt-form',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="15" y2="11"/></svg>หลักฐานใบเสร็จรับเงิน</div>
+  <div class="nav-sec dtd-billing-sec">เอกสารออกบิล</div>
+  <div class="nav-item dtd-nav-item" onclick="window.openDeliveryTaxDemo?.(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/><path d="M9 13h8M9 17h8"/></svg>ออกใบส่งสินค้า/ภาษี</div>
   <div class="nav-sec">ฝ่ายผลิต</div>
   <div class="nav-item" onclick="go('production-form',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l8 4V7l8 4v10"/><path d="M9 17h1M14 17h1M19 17h1"/></svg>สั่งผลิตสินค้า</div>
   <div class="nav-item" onclick="go('production-list',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>รายการสั่งผลิต</div>
